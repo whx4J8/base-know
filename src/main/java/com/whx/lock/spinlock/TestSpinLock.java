@@ -57,7 +57,6 @@ public class TestSpinLock {
      */
     public static Integer integer = 1;
 
-
     /**
      * 测试自旋锁
      * @param args
@@ -76,7 +75,6 @@ public class TestSpinLock {
         thread4.start();
         thread5.start();
 
-        System.out.println(integer);
     }
 
 }
