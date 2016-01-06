@@ -33,7 +33,23 @@ java互斥锁在jvm中的优化
         自动开启,默认10次,之后挂起
 
     适应性自旋锁
+        java1.6之后synchronized默认开启自适应自旋锁,自适应锁纪录上次自旋锁执行情况,若上次自旋成功,则本次也使用自旋锁,若这次
+        自旋100次失败,下次则使用线程阻塞
 
+    锁消除
+        public String concatingString(String s1,String s2,String s3){
+            return s1+s2+s3;
+        }
+
+        编译器会对String 连接优化成
+        public String concatingString(String s1,String s2,String s3){
+            StringBuffer sb = new StringBuffer();
+            sb.append(s1);
+            sb.append(s2);
+            sb.append(s3);
+            return sb.toString();
+        }
+        jvm发现sb只存在于方法内部,不会有多线程执行这段代码,编译之后将锁擦除
 
     偏向锁
 
@@ -41,8 +57,12 @@ java互斥锁在jvm中的优化
     轻量级锁
 
 
-    锁消除
-
-
     锁粗化
+        StringBuffer sb = new StringBuffer();
+        sb.append(***);
+        sb.append(***);
+        sb.append(***);
+
+        虚拟机探测到这是对同一资源进行加锁,一直保持加锁释放锁加锁释放锁,性能太低
+        将锁直接扩散到sb.append外部进行一次加锁
 
