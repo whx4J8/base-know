@@ -36,5 +36,4 @@ public class TestSynchronized {
         System.out.println(counter.count);
     }
 
-
 }
